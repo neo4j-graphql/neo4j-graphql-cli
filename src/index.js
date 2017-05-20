@@ -163,16 +163,19 @@ function postSchema(creds, callback) {
 
   var req = https.request(options, (res) => {
 
+    res.on('data', (chunk) => {
+      // got some data
+    });
+    
     res.on('end', (d) => {
       //process.stdout.write(d);
 
       if (res.statusCode == 200) {
         return callback(null, creds)
       } else {
-        return callback("Error, posting the schema IDL failed");
+        return callback("Error, posting the schema IDL failed. Please ensure your schema format is valid.");
       }
       
-      process.exit();
     });
 
   }).on('error', (e) => {
@@ -196,8 +199,9 @@ async.waterfall([
   if (err) {
     console.log("ERROR - exiting");
     console.log(err);
+    process.exit(1);
   } else {
     console.log("SUCCESFULLY DEPLOYED NEO4J GRAPHQL WITH YOUR SCHEMA.")
-    console.log(result);
+    process.exit(0);
   }
 });
