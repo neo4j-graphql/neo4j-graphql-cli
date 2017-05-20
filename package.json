@@ -1,6 +1,6 @@
 {
   "name": "neo4j-graphql-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Deploy a Neo4j backed GraphQL API based on your GraphQL schema",
   "main": "index.js",
   "scripts": {
