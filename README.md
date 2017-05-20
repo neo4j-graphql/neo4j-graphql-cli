@@ -2,6 +2,8 @@
 
 Deploy Neo4j backed GraphQL APIs based on your custom GraphQL schema.
 
+![](img/neo4j-graphql-cli.gif)
+
 **What does it do?**
 
 *Allows you to deploys a Neo4j GraphQL instance on Neo4j Sandbox. This Neo4j GraphQL instance will serve a GraphQL endpoint based on a GraphQL schema that you define.*
