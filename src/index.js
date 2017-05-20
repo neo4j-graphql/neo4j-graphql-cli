@@ -147,7 +147,12 @@ function postSchema(creds, callback) {
     console.log("No schema specified, using default movieSchema.graphql");
     schema = config.DEFAULT_SCHEMA;
   } else {
-    schema = fs.readFileSync(schemaFilename, 'utf8');
+    try {
+      schema = fs.readFileSync(schemaFilename);
+    } catch (e) {
+      console.log(chalk.red.bold("Unable to read " + schemaFilename + " - falling back to default movieSchema.graphlql"));
+      schema = config.DEFAULT_SCHEMA;
+    }
   }
 
   var options = {
@@ -194,7 +199,8 @@ async.waterfall([
   presentInfoSuccess,
   postSchema
 ], function (err, result) {
-  console.log("\n Thanks, " + result.name + "! Please email " + chalk.underline("devrel@neo4j.com") + " with any questions or feedback.")
+  var name = result.name || "";
+  console.log("\nThanks " + name + "! Please email " + chalk.underline("devrel@neo4j.com") + " with any questions or feedback.")
   
   if (err) {
     console.log("ERROR - exiting");
