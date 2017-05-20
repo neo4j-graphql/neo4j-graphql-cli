@@ -1,14 +1,14 @@
 {
-  "name": "neo4j-graphql-up",
+  "name": "neo4j-graphql-cli",
   "version": "0.0.1",
-  "description": "A CLI for provisioning Neo4j GraphQL instances",
+  "description": "Deploy a Neo4j backed GraphQL API based on your GraphQL schema",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js movieSchema.graphql"
+    "start": "./bin/neo4j-graphql"
   },
   "bin": {
-    "neo4j-graph": "./bin/neo4j-graphql"
+    "neo4j-graphql": "./bin/neo4j-graphql"
   },
   "repository": {
     "type": "git",
