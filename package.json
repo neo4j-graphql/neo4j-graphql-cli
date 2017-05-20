@@ -1,0 +1,29 @@
+{
+  "name": "neo4j-graphql-up",
+  "version": "0.0.1",
+  "description": "A CLI for provisioning Neo4j GraphQL instances",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js movieSchema.graphql"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neo4j-graph/neo4j-graphql-up.git"
+  },
+  "keywords": [
+    "GraphQL",
+    "Neo4j"
+  ],
+  "author": "William Lyon",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/neo4j-graph/neo4j-graphql-up/issues"
+  },
+  "homepage": "https://github.com/neo4j-graph/neo4j-graphql-up#readme",
+  "dependencies": {
+    "async": "^2.4.0",
+    "chalk": "^1.1.3",
+    "follow-redirects": "^1.2.3"
+  }
+}

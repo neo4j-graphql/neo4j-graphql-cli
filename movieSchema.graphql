@@ -1,0 +1,36 @@
+type User {
+  id: Int
+  name: String!
+  movies: [Movie] @relation(name: "RATED", direction: "out")
+}
+
+type Movie {
+  id: Int
+  title: String!
+  year: Int
+  plot: String
+  poster: String
+  imdbRating: Float
+  genres: [Genre] @relation(name: "IN_GENRE", direction: "out")
+  actors: [Actor] @relation(name: "ACTED_IN", direction: "in")
+  directors: [Director] @relation(name: "DIRECTED", direction: "in")
+  similar: [Movie] @cypher(statement: "WITH {this} AS this MATCH (this)-[:IN_GENRE]->(:Genre)<-[:IN_GENRE]-(rec:Movie) WITH rec, COUNT(*) AS num ORDER BY num DESC RETURN rec LIMIT 10")
+}
+
+type Genre {
+  id: Int
+  name: String!
+  movies: [Movie] @relation(name: "IN_GENRE", direction: "in")
+}
+
+type Director {
+  id: Int
+  name: String!
+  movies: [Movie] @relation(name: "DIRECTED", direction: "out")
+}
+
+type Actor {
+  id: Int
+  name: String!
+  movies: [Movie] @relation(name: "ACTED_IN", direction: "out")
+}
