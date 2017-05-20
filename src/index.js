@@ -138,19 +138,16 @@ function presentInfoSuccess(creds, callback) {
 */
 
 function postSchema(creds, callback) {
-  // is passed dictionary of sandbox info
-  // posts schema to /graphql/idl
   
-  
-  var schemaFilename = process.argv[2];
+  var schemaFilename = process.argv[2],
+      schema;
+      
   if (!schemaFilename) {
     console.log("No schema specified, using default movieSchema.graphql");
-    schemaFilename = config.DEFAULT_SCHEMA_FILENAME;
+    schema = config.DEFAULT_SCHEMA;
+  } else {
+    schema = fs.readFileSync(schemaFilename, 'utf8');
   }
-
-  //console.log(schemaFilename);
-  var schema = fs.readFileSync(schemaFilename, 'utf8')
-  //console.log(schema);
 
   var options = {
     headers: {
