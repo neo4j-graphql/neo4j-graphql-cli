@@ -12,7 +12,7 @@ function constructProxyIp(creds) {
 }
  
 function constructGraphiql(creds) {
- var graphqlEndpoint = "https://" + constructProxyIp(creds) + "/graphql";
+ var graphqlEndpoint = "https://" + constructProxyIp(creds) + "/graphql/";
  var graphiqlURL = config.BASE_GRAPHIQL_URL + "?graphqlEndpoint=" + graphqlEndpoint + "&graphqlUser=neo4j" + "&graphqlPassword=" + creds.password;
    
  return graphiqlURL;

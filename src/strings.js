@@ -14,7 +14,7 @@ var redirectForSandboxText = "You may now sign in to Neo4j Sandbox to create a N
 
 var sandboxExplainerText = "Once you sign into Neo4j Sandbox your Neo4j GraphQL instance will be deployed and a GraphQL endpoint will be created based on your schema";
 
-var boxTopText = "********************************************************************************";
+var boxTopText = "--------------------------------------------------------------------------------";
 
 module.exports = {
   banner: banner,

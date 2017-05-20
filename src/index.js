@@ -5,7 +5,8 @@ var async   = require('async'),
     strings  = require('./strings'),
     config  = require('./config'),
     chalk   = require('chalk'),
-    helpers = require('./helpers');
+    helpers = require('./helpers'),
+    opn     = require('opn');
 
 // Chalk styles
 
@@ -61,6 +62,8 @@ function redirectUser(token, callback) {
   console.log(chalkURL(config.SANDBOX_REDIRECT_URL + token));
   console.log(strings.boxTopText);
   console.log(strings.sandboxExplainerText);
+  
+  opn(config.SANDBOX_REDIRECT_URL + token);
 
   callback(null, token);
 }
@@ -168,6 +171,8 @@ function postSchema(creds, callback) {
       } else {
         return callback("Error, posting the schema IDL failed");
       }
+      
+      process.exit();
     });
 
   }).on('error', (e) => {
