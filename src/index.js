@@ -124,12 +124,13 @@ function pollSandboxInfo(token, callback) {
 
 function presentInfoSuccess(creds, callback) {
   console.log("Your GraphQL endpoint is available here:")
-  console.log("https://" + helpers.constructProxyIp(creds) + "/graphql");
+  console.log(chalkURL("https://" + helpers.constructProxyIp(creds) + "/graphql/\n"));
   console.log("Be sure to set Basic Auth header in your requests:");
-  console.log("Authorization: Basic " + new Buffer("neo4j:" + creds.password).toString('base64'));
+  console.log(chalk.bold("Authorization: Basic " + new Buffer("neo4j:" + creds.password).toString('base64')));
+  console.log("\n");
   
   console.log("Explore your Neo4j GraphQL API in Graphiql here:")
-  console.log(helpers.constructGraphiql(creds));
+  console.log(chalkURL(helpers.constructGraphiql(creds)));
   
   return callback(null, creds);
 }
@@ -193,12 +194,14 @@ async.waterfall([
   presentInfoSuccess,
   postSchema
 ], function (err, result) {
+  console.log("\n Thanks, " + result.name + "! Please email " + chalk.underline("devrel@neo4j.com") + " with any questions or feedback.")
+  
   if (err) {
     console.log("ERROR - exiting");
     console.log(err);
     process.exit(1);
   } else {
-    console.log("SUCCESFULLY DEPLOYED NEO4J GRAPHQL WITH YOUR SCHEMA.")
+    //console.log("SUCCESFULLY DEPLOYED NEO4J GRAPHQL WITH YOUR SCHEMA.")
     process.exit(0);
   }
 });
