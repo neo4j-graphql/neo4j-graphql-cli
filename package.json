@@ -7,9 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js movieSchema.graphql"
   },
+  "bin": {
+    "neo4j-graph": "./bin/neo4j-graphql"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neo4j-graph/neo4j-graphql-up.git"
+    "url": "git+https://github.com/neo4j-graph/neo4j-graphql-cli.git"
   },
   "keywords": [
     "GraphQL",
