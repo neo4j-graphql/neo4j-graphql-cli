@@ -8,39 +8,54 @@ module.exports = {
   BASE_GRAPHIQL_URL: "https://neo4j-graphql.github.io/graphiql4all/index.html",
   DEFAULT_SCHEMA_FILENAME: "movieSchema.graphql",
   DEFAULT_SCHEMA: `type User {
-    id: Int
-    name: String!
-    movies: [Movie] @relation(name: "RATED", direction: "out")
-  }
-
-  type Movie {
-    id: Int
-    title: String!
-    year: Int
-    plot: String
-    poster: String
-    imdbRating: Float
-    genres: [Genre] @relation(name: "IN_GENRE", direction: "out")
-    actors: [Actor] @relation(name: "ACTED_IN", direction: "in")
-    directors: [Director] @relation(name: "DIRECTED", direction: "in")
-    similar: [Movie] @cypher(statement: "WITH {this} AS this MATCH (this)-[:IN_GENRE]->(:Genre)<-[:IN_GENRE]-(rec:Movie) WITH rec, COUNT(*) AS num ORDER BY num DESC RETURN rec LIMIT 10")
-  }
-
-  type Genre {
-    id: Int
-    name: String!
-    movies: [Movie] @relation(name: "IN_GENRE", direction: "in")
-  }
-
-  type Director {
-    id: Int
-    name: String!
-    movies: [Movie] @relation(name: "DIRECTED", direction: "out")
-  }
-
-  type Actor {
-    id: Int
-    name: String!
-    movies: [Movie] @relation(name: "ACTED_IN", direction: "out")
-  }`
+  name: ID!
+  seen: [Movie] @relation(name: "RATED")
+  recommended(first:Int = 5): [Movie] @cypher(statement:"WITH $this as u MATCH (u)-->(:Movie)<--(:User)-->(reco:Movie) WHERE NOT (u)-[:RATED]->(reco) RETURN reco, count(*) as score ORDER BY score DESC LIMIT $first") 
+}
+enum Genre {
+  SciFi, Drama, Horror, Family, Comedy
+}
+type Movie {
+  title: ID!
+  year: Int
+  plot: String
+  imdbRating: Float
+  poster: String
+  genre: [Genre]
+  actors: [Actor] @relation(name: "ACTED_IN", direction: "in")
+  directors: [Director] @relation(name: "DIRECTED", direction: "in")
+  similar(first:Int=5): [Movie] @cypher(statement: 
+      "WITH $this AS this MATCH (this)<-[:DIRECTED|ACTED_IN]-(:Person)-[:DIRECTED|ACTED_IN]->(sim:Movie) RETURN sim, COUNT(*) AS freq ORDER BY freq DESC LIMIT $first")
+}
+interface Person {
+  name: ID!
+  born: Int
+  movies: [Movie]
+}
+type Director implements Person {
+  name: ID!
+  born: Int
+  movies: [Movie] @relation(name: "DIRECTED")
+}
+type Actor implements Person {
+  name: ID!
+  born: Int
+  movies: [Movie] @relation(name: "ACTED_IN")
+  totalMovies:Int @cypher(statement: 
+    "WITH $this as this RETURN size( (this)-[:ACTED_IN]->(:Movie) ) as total")
+}
+schema {
+  mutation: MutationType
+  query: QueryType
+}
+type QueryType {
+  topRatedMovies(rating:Int): [Movie] @cypher(statement:
+  "MATCH (m:Movie)<-[r:RATED]-(:User) WHERE r.score > $score RETURN m, avg(r.rating) as score ORDER BY score DESC LIMIT 10")
+  moviesByName(substring:String, first: Int): [Movie] @cypher(statement:
+  "MATCH (m:Movie) WHERE toLower(m.title) CONTAINS toLower($substring) RETURN m LIMIT $first")
+}
+type MutationType {
+  rateMovie(user:ID!,movie:ID!,score:Float=5) : String
+  @cypher(statement:"MATCH (u:User {name:$user}), (m:Movie {title:$movie}) MERGE (u)-[r:RATED]->(m) SET r.score = $score")
+}`
 }
