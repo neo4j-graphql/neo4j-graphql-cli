@@ -199,15 +199,15 @@ async.waterfall([
   presentInfoSuccess,
   postSchema
 ], function (err, result) {
-  var name = result.name || "";
-  console.log("\nThanks " + name + "! Please email " + chalk.underline("devrel@neo4j.com") + " with any questions or feedback.")
-  
-  if (err) {
-    console.log("ERROR - exiting");
-    console.log(err);
-    process.exit(1);
-  } else {
-    //console.log("SUCCESFULLY DEPLOYED NEO4J GRAPHQL WITH YOUR SCHEMA.")
-    process.exit(0);
+    if (err) {
+      console.log("ERROR - exiting");
+      console.log(err);
+      process.exit(1);
+    } else {
+    if (result) {
+      var name = result.name || "";
+      console.log("\nThanks " + name + "! Please email " + chalk.underline("devrel@neo4j.com") + " with any questions or feedback.");
+      process.exit(0);
+    }
   }
 });
