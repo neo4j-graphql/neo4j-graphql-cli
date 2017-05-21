@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neo4j-graph/neo4j-graphql-cli.git"
+    "url": "git+https://github.com/neo4j-graphql/neo4j-graphql-cli.git"
   },
   "keywords": [
     "GraphQL",
