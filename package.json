@@ -21,9 +21,9 @@
   "author": "William Lyon",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/neo4j-graph/neo4j-graphql-up/issues"
+    "url": "https://github.com/neo4j-graphql/neo4j-graphql-cli/issues"
   },
-  "homepage": "https://github.com/neo4j-graph/neo4j-graphql-up#readme",
+  "homepage": "https://github.com/neo4j-graphql/neo4j-graphql-cli#readme",
   "dependencies": {
     "async": "^2.4.0",
     "chalk": "^1.1.3",
