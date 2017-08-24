@@ -12,7 +12,7 @@ Deploy Neo4j backed GraphQL APIs based on your custom GraphQL schema.
 
 ## Steps
 
-1. `npm install -g neo4j-graph-cli`
+1. `npm install -g neo4j-graphql-cli`
 1. Define your GraphQL schema using GraphQL schema syntax, *myschema.graphql*
 1. `neo4j-graphql myschema.graphql` - if you do not specify a schema a [default movies schema]() will be used.
 1. When prompted sign into Neo4j Sandbox using the URL provided. This URL will include a token to associate your `neo4j-graphql-cli` session with your sandbox instance.
