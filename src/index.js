@@ -189,6 +189,39 @@ function postSchema(creds, callback) {
   req.end();
 }
 
+function writeGraphqlConfig(creds, callback) {
+  
+  process.env['NEO4J_GRAPHQL_ENDPOINT'] = helpers.constructProxyIp(creds) + "/graphql/";
+  process.env['NEO4J_GRAPHQL_TOKEN'] =  new Buffer("neo4j:" + creds.password).toString('base64');
+  
+  let graphqlConfig = {
+    "schemaPath": process.argv[2] || config.DEFAULT_SCHEMA_FILENAME,    
+    "extensions": {
+      "endpoints": {
+        "dev": { 
+          "url": process.env['NEO4J_GRAPHQL_ENDPOINT'],
+          "headers": {
+            "Authorization": "Basic ${env:NEO4J_GRAPHQL_TOKEN}"
+          }
+        }
+      }
+    }
+  };
+  
+  try {
+    fs.writeFileSync(".graphqlconfig", JSON.stringify(graphqlConfig));
+  } catch (e) {
+    callback(e, creds);
+  } 
+  
+  console.log("Writing config to .graphqlconfig....");
+  // TODO: log environment variable export command given shell
+  console.log("Note: .graphqlconfig references an environment variable for the authorization token.");
+  console.log("Run this command to export NEO4J_GRAPHQ_TOKEN as an environment variable:");
+  console.log("export NEO4J_GRAPHQL_TOKEN=" + process.env['NEO4J_GRAPHQL_TOKEN']);
+  
+  callback(null, creds);
+}
 
 // MAIN
 async.waterfall([
@@ -197,6 +230,7 @@ async.waterfall([
   redirectUser,
   pollSandboxInfo,
   presentInfoSuccess,
+  writeGraphqlConfig,
   postSchema
 ], function (err, result) {
     if (err) {

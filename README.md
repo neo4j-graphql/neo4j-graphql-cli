@@ -75,16 +75,38 @@ type Actor {
 
 
 
-## Examples
+## .graphqlconfig
 
-TODO
+`neo4j-graphql-cli` supports [.graphqlconfig](https://github.com/graphcool/graphql-config) and will create a .graphqlconfig file that contains the path to the schema file, endpoints and authorization header. For example:
+
+```
+{
+  "schemaPath":"personSchema.graphql",
+  "extensions":
+    {
+      "endpoints":
+      {
+        "dev":
+          {
+            "url": "10-0-1-70-34285.neo4jsandbox.com/graphql/",
+            "headers":
+            {
+              "Authorization":"Basic ${env:NEO4J_GRAPHQL_TOKEN}"
+            }
+          }
+      }
+    }
+}
+```
 
 # Features
 
 - [x] deploy Neo4j GraphQL Sandbox instance
 - [x] support user defined GraphQL schema
 - [x] support @cypher GraphQL schema directives
-- [ ] support self-hosted Neo4j instances
+- [x] .graphqlconfig support
+- [ ] support self-hosted Neo4j instances. NOTE: see 
+- [ ] Docker support
 - [ ] support schema updates
 - [ ] client app scaffolding
 
