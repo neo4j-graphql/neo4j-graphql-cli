@@ -1,6 +1,6 @@
 # Neo4j GraphQL CLI
 
-## NOTE: This project is deprecated in favor of [neo4j-graphql.js](https://grandstack.io/docs/neo4j-graphql-js.html)
+## NOTE: This project is deprecated in favor of [the official Neo4j GraphQL Library](https://neo4j.com/product/graphql-library/)
 
 Deploy Neo4j backed GraphQL APIs based on your custom GraphQL schema.
 
